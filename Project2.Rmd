@@ -1,0 +1,361 @@
+---
+title: 'HW 2: 2.18, 2.19, 2.20, 2.22, 2.23, 2.43, 2.44, 2.81, 2.130'
+author: Andrew Castillo
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+`r format(Sys.time())`
+
+<font size="4">2.18a) </font> 
+**Plot the data**
+
+
+```{r armstr}
+rms = read.table("ex02-18armstr.txt", header = TRUE, sep = "\t", stringsAsFactors = FALSE)
+non_baseball = subset(rms, rms[,2] == 'Control')
+
+plot(non_baseball$Dom, non_baseball$NonDom, xlab = 'Dominant (cm^4/1000)', ylab = 'Non-Dominant (cm^4/1000)', main = 'Control Group Bone Strength')
+abline(lm(non_baseball$NonDom ~ non_baseball$Dom))
+```
+
+
+<font size="4">2.18b) </font> 
+**Describe the pattern**
+
+There is a cluster of points in the [10, 20] x [10, 20] range. Seems to follow a generally linear upward trend.
+
+<font size="4">2.18c) </font> 
+**Describe the form, strength, and direction of the relationship**
+
+Approximately LINEAR relationship. The relationship is STRONG, and POSITIVE.
+
+<font size="4">2.18d) </font> 
+**Identify outliers**
+
+The data point with 25.2 NonDom and 26.9 Dom is the only possible outlier. Else, there aren't any.
+
+<font size="4">2.18e </font> 
+**Determine if the relationship is approximately linear**
+
+By the best fit line, this relationship appears to be linear.
+
+<font size="4">2.19a) </font> 
+**Plot the data**
+
+```{r baseball_str}
+baseball = subset(rms, rms[,2] == 'Baseball')
+plot(baseball$Dom, baseball$NonDom, xlab = 'Dominant (cm^4/1000)', ylab = 'Non-Dominant (cm^4/1000)', main = 'Baseball Group Bone Strength')
+abline(lm(baseball$NonDom ~ baseball$Dom))
+
+```
+
+
+<font size="4">2.19b) </font> 
+**Describe the pattern**
+
+The pattern is similar to the control group, with a higher average bone strength in general. The points are more evenloy spread.
+
+<font size="4">2.19c) </font> 
+**Describe the form, strength, and direction of the relationship**
+
+Approximately LINEAR relationship. The relationship is STRONG, and POSITIVE.
+
+<font size="4">2.19d) </font> 
+**Identify outliers**
+
+The data point with 31.5 Non Dominant and 36.9 Dominant is an outlier, with values much higher than average in both category.
+
+<font size="4">2.19e </font> 
+**Determine if the relationship is approximately linear**
+
+Yes, based on the best fit line, this relationship is approximately linear.
+
+<font size="4">2.20a) </font> 
+**Plot both the control and baseball groups on the same plot**
+
+```{r}
+
+plot(baseball$Dom, baseball$NonDom, col = 'blue', xlab = 'Dominant (cm^4/1000)', ylab = 'Non-Dominant (cm^4/1000)', main = 'Bone Strength')
+points(non_baseball$Dom, non_baseball$NonDom, col='red') 
+abline(lm(baseball$NonDom ~ baseball$Dom), col = 'blue')
+abline(lm(non_baseball$NonDom ~ non_baseball$Dom), col = 'red')
+legend('topleft', legend = c("Baseball Group", "Control Group"), col = c('Blue','Red'), lty= 1:1, cex = 0.8)
+```
+
+
+<font size="4">2.22a) </font>
+**Plot the data**
+
+```{r}
+time = c(1,3,5,7)
+count = c(578,317,203,118)
+
+plot(time, count, xlab = 'time (minutes)', ylab = 'count (counts)', main = 'Radioactive Decay')
+abline(lm(time ~ count))
+
+```
+
+The x axis was chosen as time (convention), forcing the y-axis to be counts.
+
+<font size="4">2.22b) </font> 
+**Describe the pattern, obvious outliers**
+
+Overall pattern appears linear, negative. No obvious outliers.
+
+<font size="4">2.22c) </font>
+**Form, direction, strength**
+
+The form is approximately LINEAR, the direction is NEGATIVE, and the strength is STRONG
+
+<font size="4">2.22d) </font>
+**Outliers**
+
+No outliers.
+
+<font size="4">2.22e) </font> 
+**Determine if approximately linear**
+```{r scatter_22}
+decay_set = read.table("ex02-22decay.txt", header = TRUE, sep = "\t")
+plot(decay_set$Time, decay_set$Count, xlab = 'time (minutes)', ylab = 'counts(counts)', main = 'Radioactive Decay')
+
+abline(lm(decay_set$Count ~ decay_set$Time))
+```
+
+
+Based on the LSRL this is approximately linear.
+
+<font size="4">2.23a) </font> 
+**Logarithmic scale**
+
+```{r scatter_23}
+decay_set = read.table("ex02-22decay.txt", header = TRUE, sep = "\t")
+plot(decay_set$Time, decay_set$LogCount, xlab = 'Time (minutes)', ylab = 'log(Count) (counts)', main = "Radioactive Decay")
+```
+
+
+I prefer the logarithmic plot, because the plot demonstrates a pattern much more clearly.
+
+<font size="4">2.22b) </font> 
+**Describe the pattern, obvious outliers**
+
+Overall pattern appears linear, negative. No obvious outliers.
+
+<font size="4">2.22c) </font>
+**Form, direction, strength**
+
+The form is approximately LINEAR, the direction is NEGATIVE, and the strength is STRONG (appears almost perfect).
+
+<font size="4">2.22d) </font>
+**Outliers**
+
+No outliers.
+
+<font size="4">2.22e) </font> 
+**Determine if approximately linear**
+
+It is clearly approxmiately linear.
+
+
+<font size="4">2.43a) </font> 
+** Find the correlation between bone strength of dominant and non-dominant arms for control group:**
+
+The correlation coefficient for the control group is `r cor(non_baseball$Dom, non_baseball$NonDom)`.
+
+<font size="4">2.43b) </font> 
+**Determine if the correlation coefficient a good measure of the data**
+
+The correlation IS a good summary of the data points- they are clearly strongly correlated.
+
+
+<font size="4">2.44a) </font> 
+**Find the correlation between bone strength of dominant and non-dominant arms for baseball group**
+
+The correlation coefficient for the baseball group is `r cor(baseball$Dom, baseball$NonDom)`.
+
+<font size="4">2.44b) </font>
+**Determine if the correlation coefficient a good measure of the data**
+
+The correlation is an adequate measure of the data, relative to the plot- though it is less so than the prior part.
+
+
+
+<font size="4">2.81a) </font>
+**Compute the statistics for all parts of the data**
+```{r table_plot}
+ansc = read.table("ex02-81ansc.txt", header = TRUE, sep = "\t", stringsAsFactors = FALSE)
+
+```
+
+**Data set A**
+
+The mean of x is `r (sum(ansc$xA))*(1/11) `, and of y is `r (sum(ansc$yA))*(1/11)`. The standard deviation of x is `r sd(ansc$xA)` and of y is `r sd(ansc$yA) `. The expected value at x = 10 is 1*10 + 0 = 10, based on the lm function. The correlation is `r cor(ansc$xA, ansc$yA)`
+
+```{r}
+
+xA_meaan = (sum(ansc$xA))*(1/11)
+yA_mean = (sum(ansc$yA))*(1/11)
+
+xA_sd = sd(ansc$xA)
+yA_sd = sd(ansc$yA)
+
+dsAcor = cor(ansc$xA, ansc$yA)
+
+lm(ansc$xB ~ ansc$xA)
+
+```
+
+
+**Data set B**
+
+The mean of x is `r (sum(ansc$xB))*(1/11) `, and of y is `r (sum(ansc$yB))*(1/11)`. The standard deviation of x is `r sd(ansc$xB)` and of y is `r sd(ansc$yB) `. The expected value at x = 10 is 0.75*10 + 1.875 = 9.375, based on the lm function. The correlation is `r cor(ansc$xB, ansc$yB)`
+
+```{r}
+
+xB_meaan = (sum(ansc$xB))*(1/11)
+yB_mean = (sum(ansc$yB))*(1/11)
+
+xB_sd = sd(ansc$xB)
+yB_sd = sd(ansc$yB)
+
+dsBcor = cor(ansc$xB, ansc$yB)
+
+lm(ansc$yB ~ ansc$yA)
+
+```
+
+**Data set C**
+
+The mean of x is `r (sum(ansc$xC))*(1/11) `, and of y is `r (sum(ansc$yC))*(1/11)`. The standard deviation of x is `r sd(ansc$xC)` and of y is `r sd(ansc$yC) `. The expected value at x = 10 is 0.4997*10 + 3.0025 = 7.9995, based on the lm function. The correlation is `r cor(ansc$xC, ansc$yC)`
+
+
+```{r}
+
+xC_meaan = (sum(ansc$xC))*(1/11)
+yC_mean = (sum(ansc$yC))*(1/11)
+
+xC_sd = sd(ansc$xC)
+yC_sd = sd(ansc$yC)
+
+dsCcor = cor(ansc$xC, ansc$yC)
+
+lm(ansc$yC ~ ansc$xC)
+
+```
+
+**Data set D**
+
+The mean of x is `r (sum(ansc$xD))*(1/11) `, and of y is `r (sum(ansc$yD))*(1/11)`. The standard deviation of x is `r sd(ansc$xD)` and of y is `r sd(ansc$yD) `. The predicted value at x = 10 is .4999*10 + 3.0017 = 8.0007. The correlation is `r cor(ansc$xD, ansc$yD)`
+
+
+```{r}
+
+xD_mean = (sum(ansc$xD))*(1/11)
+yD_mean = (sum(ansc$yD))*(1/11)
+
+xD_sd = sd(ansc$xD)
+yD_sd = sd(ansc$yD)
+
+dsDcor = cor(ansc$xD, ansc$yD)
+
+lm(ansc$yD ~ ansc$xD)
+
+```
+
+
+<font size="4">2.81b) </font>
+**Make a scatter plot and add a regression line**
+```{r plot_a}
+plot(ansc$xA, ansc$yA, main = 'Data Set A', xlab = 'x', ylab = 'y')
+abline(lm(ansc$yA ~ ansc$xA))
+```
+
+```{r plot_b}
+plot(ansc$xB, ansc$yB, main = 'Data Set B', xlab = 'x', ylab = 'y')
+abline(lm(ansc$yB ~ ansc$xB))
+```
+
+```{r plot_c}
+plot(ansc$xC, ansc$yC, main = 'Data Set C', xlab = 'x', ylab = 'y')
+abline(lm(ansc$yC ~ ansc$xC))
+```
+
+```{r plot_d}
+plot(ansc$xD, ansc$yD, main = 'Data Set D', xlab = 'x', ylab = 'y')
+abline(lm(ansc$yD ~ ansc$xD))
+```
+
+<font size="4">2.81c) </font>
+**Determine which cases to use the regression line to describe the dependence of y on x**
+
+I believe the regression line is a good measure in data sets A, C. It's an average measure in data set B, and a poor measure in D.
+
+I would use the line to express the dependence of Y on X in set C and set A, because the points are correlated and lie along the line. In set B, it'd be adequate, but there is probably a better model, possibly a parabolic one. Data set D is clearly skewed dramatically by a single outlier and therefore, I would NOT use the line to describe its relationship.
+
+
+<font size="4">2.130a) </font> 
+**Determine the death rate in hospital patients who were classified as "poor" before their surgery.**
+
+```{r hospital_bad}
+deaths = read.table("ex02-130hosp.txt", header = TRUE, sep = "\t", stringsAsFactors = FALSE)
+
+a_group = subset(deaths, deaths[,1] == 'Poor' & deaths[,2] == 'A')
+dead_group_a = subset(a_group, a_group$Survival == 'Dead')
+
+b_group = subset(deaths, deaths[,1] == 'Poor' & deaths[,2] == 'B')
+dead_group_b = subset(b_group, b_group$Survival == 'Dead')
+
+a1 = sum(a_group$Count)
+a2 = dead_group_a$Count
+
+b1 = sum(b_group$Count)
+b2 = dead_group_b$Count
+
+
+```
+
+Of the total `r sum(a_group$Count) ` patients who entered hospital A in poor condition, `r dead_group_a$Count` died. That is a survival rate of
+`r (a1 - a2)/a1 * 100` percent.
+
+For hospital B, of the total `r sum(b_group$Count) ` patients who entered in poor condition, `r dead_group_b$Count` died. That is a survival rate of
+`r (b1 - b2)/b1 * 100` percent.
+
+In this case, hospital A has a very slight advantage for poor patients, but A and B seem interchangeable.
+
+<font size="4">2.130b) </font> **Repeat a, but with good instead of poor condition**
+
+```{r hospital_good}
+deaths = read.table("ex02-130hosp.txt", header = TRUE, sep = "\t", stringsAsFactors = FALSE)
+
+a_group_1 = subset(deaths, deaths[,1] == 'Good' & deaths[,2] == 'A')
+dead_group_a_1 = subset(a_group_1, a_group_1$Survival == 'Dead')
+
+b_group_1 = subset(deaths, deaths[,1] == 'Good' & deaths[,2] == 'B')
+dead_group_b_1 = subset(b_group_1, b_group_1$Survival == 'Dead')
+
+a3 = sum(a_group_1$Count)
+a4 = dead_group_a_1$Count
+
+b3 = sum(b_group_1$Count)
+b4 = dead_group_b_1$Count
+
+
+```
+
+Of the total `r sum(a_group_1$Count) ` patients who entered hospital A in good condition, `r dead_group_a_1$Count` died. That is a survival rate of
+`r (a3 - a4)/a3 * 100` percent.
+
+For hospital B, of the total `r sum(b_group_1$Count) ` patients who entered in good condition, `r dead_group_b_1$Count` died. That is a survival rate of
+`r (b3 - b4)/b3 * 100` percent.
+
+In this case, again hospital A has a very slight advantage for good patients.
+
+<font size="4">2.130c) </font> **Which hospital do you recommend**
+
+I would recommend hospital A over hospital B to any patient.
+
+<font size="4">2.130c) </font> **Explain how A is better in both categories, but worse overall **
+
+A much larger number of people enter A in poor condition, leading to a higher rate of deaths (because poor patients are at a higher risk of dying). A handles these well, and the data is skewed by the larger (about 7 times) as many people passing through hospital A vs B in poor condition.
+
